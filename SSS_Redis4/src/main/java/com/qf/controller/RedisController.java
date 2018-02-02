@@ -15,5 +15,6 @@ public class RedisController {
 	@RequestMapping("edit.action")
 	public void edit() {
 		service.edit();
+		System.out.println("====");
 	}
 }
