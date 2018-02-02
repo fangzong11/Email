@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.TopicDao">
+    <resultMap id="topicMap" type="Topic">
+        <id property="id" column="id"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="title" column="title"/>
+        <result property="heatNum" column="heat_num"/>
+        <result property="messageNum" column="message_num"/>
+    </resultMap>
+
+    <select id="getTopicList" resultMap="topicMap">
+        SELECT id,img_url,title,heat_num,message_num
+        FROM topics
+    </select>
+</mapper>

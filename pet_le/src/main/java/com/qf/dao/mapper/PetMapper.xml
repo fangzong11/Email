@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.DetailDao">
+    <resultMap id="detailMap" type="Detail">
+        <id column="ID" property="id"/>
+        <result property="title" column="TITLE"/>
+        <result property="content" column="CONTENT"/>
+        <result property="viewCount" column="VIEW_COUNT"/>
+        <result property="cate" column="CATE"/>
+        <result property="imgUrl" column="IMG_URL"/>
+        <result property="pet.id" column="P_ID"/>
+
+    </resultMap>
+    <select id="getPetList" parameterType="int" resultMap="detailMap">
+        SELECT  d.TITLE,d.CONTENT,d.CATE,d.IMG_URL,d.VIEW_COUNT,p.PET_TYPE from tb_tip_detail  d
+        INNER  join tb_tip_pet p
+        ON  d.P_ID=p.ID
+        WHERE  d.P_ID=#{id}
+    </select>
+
+    <select id="getPetByID" parameterType="int" resultMap="detailMap">
+       SELECT d.ID, d.TITLE,d.CONTENT,d.CATE,d.IMG_URL,d.VIEW_COUNT from tb_tip_detail d
+       WHERE  d.ID=#{id}
+    </select>
+    
+    <update id="updateViewCount" parameterType="Detail">
+        UPDATE  tb_tip_detail SET VIEW_COUNT=VIEW_COUNT+1 WHERE  ID=#{id}
+    </update>
+
+</mapper>

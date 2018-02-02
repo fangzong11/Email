@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.ChannelDao">
+    <select id="select" resultMap="map1">
+        SELECT u.username username,c.id id,d.avatar_url avatarurl,
+        c.lightTitle lightTitle,c.title title,
+        c.linkNumber linkNumber,c.commentNumber commentNumber,
+        u2.imgUrl imgUrl
+        FROM users u
+        LEFT JOIN userinfo d
+        ON u.id=d.USER_ID
+        LEFT JOIN channel c
+        ON d.USER_ID=c.u_id
+        LEFT JOIN url u2
+        ON c.u_id=u2.u_id
+    </select>
+    <resultMap type="Channel" id="map1">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="usericon" column="avatarurl" />
+        <result property="lightTitle" column="lightTitle"/>
+        <result property="title" column="title"/>
+        <result property="linkNumber" column="linkNumber"/>
+        <result property="commentNumber" column="commentNumber"/>
+        <collection property="imgUrl" ofType="Url">
+        <result property="imgUrl" column="imgUrl"/>
+        </collection>
+    </resultMap>
+</mapper>

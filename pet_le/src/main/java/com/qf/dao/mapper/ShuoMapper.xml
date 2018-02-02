@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.ShuoDao">
+    <resultMap id="shuoMap" type="Shuo">
+        <id property="id" column="id"/>
+        <result property="usericon" column="AVATAR_URL"/>
+        <result property="nickname" column="nickname"/>
+        <result property="title" column="title"/>
+        <result property="province" column="privance"/>
+        <result property="city" column="city"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="likeNumber" column="like_number"/>
+        <result property="number" column="num"/>
+        <collection property="userIcons" ofType="UserIcons">
+            <id property="id" column="us_id"/>
+            <result property="iconUrl" column="us_ava"/>
+        </collection>
+        <collection property="commentList" ofType="Message">
+            <id property="id" column="m_id"/>
+            <result property="nickname" column="ss_nickname"/>
+            <result property="text" column="text"/>
+        </collection>
+    </resultMap>
+
+    <select id="getShuoList" resultMap="shuoMap">
+        SELECT s.id,s.title,s.content,s.like_number,s.num,s.img_url,u.nickname,ud.privance,ud.city,ui.AVATAR_URL,m.id m_id,m.text,us.ID us_id,us.AVATAR_URL us_ava,ss.nickname ss_nickname
+        FROM shuos s
+        JOIN users u
+        ON u.id = s.user_id
+        JOIN user_detail ud
+        ON ud.u_id = u.id
+        JOIN userinfo ui
+        ON ui.USER_ID = u.id
+        LEFT JOIN messages m
+        ON m.shuo_id = s.id
+        LEFT JOIN userinfo us
+        ON m.user_id = us.USER_ID
+        LEFT JOIN users ss
+        ON m.user_id = ss.id
+    </select>
+</mapper>

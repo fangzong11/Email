@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.OauthUserDao">
+    <insert id="addOauthUser" parameterType="OauthUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO x_oauth(oauth_name,oauth_id,oauth_access_token,oauth_expires)
+        VALUES (#{oauthName},#{oauthId},#{oauthAccessToken},#{oauthExpries})
+    </insert>
+
+    <select id="getQQOauthUser" resultType="int" parameterType="OauthUser">
+        SELECT COUNT(*)
+        FROM x_oauth
+        WHERE oauth_name=#{oauthName} and oauth_access_token=#{oauthAccessToken}
+    </select>
+
+    <resultMap id="oauthUserMap" type="OauthUser">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="oauthName" column="oauth_name"/>
+        <result property="oauthAccessToken" column="oauth_access_token"/>
+        <result property="oauthExpries" column="oauth_expries"/>
+        <result property="oauthId" column="oauth_id"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.IdentifyDao">
+    <resultMap id="userIdentifyMap" type="UserInfo">
+        <id property="id" column="ID"/>
+        <result property="nickname" column="NICKNAME"/>
+        <result property="avatarURL" column="AVATAR_URL"/>
+        <association property="userIdentify" javaType="UserIdentify">
+            <result property="like" column="LIKE"/>
+            <result property="fans" column="FANS"/>
+            <result property="description" column="DESCRIPTION"/>
+            <result property="type" column="TYPE"/>
+        </association>
+    </resultMap>
+
+    <select id="getUserIdentifyList" resultMap="userIdentifyMap">
+        SELECT uo.id,u.nickname,ui.LIKE,ui.TYPE,ui.FANS,ui.DESCRIPTION,uo.AVATAR_URL
+        FROM users u
+        JOIN user_identify ui
+        ON ui.U_ID = u.id
+        JOIN userinfo uo
+        ON uo.USER_ID = u.id
+    </select>
+</mapper>
